@@ -1,5 +1,5 @@
 ---
-title: "Plantilla Proyecto G15"
+title: "Hito 2 G15"
 author: "Joaquin Sills"
 format: html
 editor: visual
@@ -247,3 +247,139 @@ Además de esto, los rendimientos porcentuales específicamente de los activos d
 Para la energía se escogió Empresas Copec S.A, la cual hoy en día está formando parte de muchos proyectos sustentables tanto en Chile como en el extrangero. Se acordó que formará parte del portafolio con un 35%, esto debido a que pese a que la industria de la energía está en constante progreso, con el objetivo de generar métodos más sustentables para la producción y utilización de esta, aún está en constante desarrollo. Este trae consigo cierta incertidumbre en todos sus ámbitos sobre todo en las grandes inversiones que se realizan para hacer pruebas y testeos de los nuevos sistemas que se implementan. Pero pese a eso el mundo energético tiene una buena proyección a un mediano-largo plazo, donde se espera tener grandes avances para implementar energías renovables y sustentables que generen menores emisiones y tengan un aporte significativo en la sociedad.
 
 El 15% de este portafolio está destinado al activo bancario, el cual es el fondo mutuo Bci USA. Este se caracteriza por ser parte del mercado accionario de Estados Unidos, se invierte en deuda y en capitalización, e invierte como mínimo el 60% de sus activos en acciones de empresas que operan en Estados Unidos. Es un fondo de gran diversificación y te permite invertir en el mercado internacional, pero la razón por la que le dimos un porcentaje tan bajo, es que tiene un perfil muy agresivo, lo que implica constantes fluctuaciones negativas y la posibilidad de ganancias en el largo plazo. Por lo que como grupo decidimos ser adversos al riesgo y centrarnos en opciones más seguras e innovadoras. 
+
+## Hito 2
+
+### Aplicación Black-Scholes
+
+El modelo de Black&Scholes es un modelo de valorización de opciones, utilizandoel precio del activo subyacente, el tiempo que resta para el vencimiento, el tipo de interés libre de riesgo y la volatilidad. Este último elemento es escencial para descontar los flujos de efectivo futuros y calcular la volatilidad implícita.
+
+En este caso, se ha propuesto valorizar opciones de compra de la empresa Cencosud, para esto, se ha definido primeramente el modelo en la imagen siguiente:
+
+![](FotosH2/Captura%20de%20pantalla%202023-10-19%20174706.png)
+
+**Método de valorización Black&Scholes**
+
+Para este ejercicio, se han obtenido los parámetros necesarios a través de Yahoo Finance, obteniendo un valor actual para el día lunes 23 de Octubre de 1295 por acción, un precio de ejercicio supuesto igual a 1400 con un plazo de 2 años (madurez) y una tasa libre de riesgo de 6,8% (bonos en pesos a 5 años) obtenido del banco central.
+
+![](FotosH2/banco%20central.png)
+
+```{r}
+
+# Datos
+K <- 1100  # Precio de ejercicio (strike price)
+r <- 0.068  # Tasa de interés libre de riesgo
+sigma <- 0.2  # Volatilidad del activo subyacente
+T <- 2  # Tiempo hasta la expiración (en años)
+S0 <- 1295  # Precio actual del activo subyacente
+
+# Calcula d1 y d2
+d1 <- (log(S0 / K) + (r + (sigma^2) / 2) * T) / (sigma * sqrt(T))
+d2 <- d1 - sigma * sqrt(T)
+
+# Calcula el precio de la opción call
+call_price <- S0 * pnorm(d1) - K * exp(-r * T) * pnorm(d2)
+
+cat("El precio de la opción call es:", round(call_price, 2), "\n")
+
+```
+
+Se puede observar el precio de la opcion call con dichos parámetros y fechas.
+
+### Modelo Adicional de valorizacion
+
+**Método de valorización Binomial**
+
+Se explica junto con descripcion matemática (fórmulas) correcta un modelo alternativo para valorizar la accion haciendo revisión de literatura cientifica con tal de hacer una referencia a un artículo del modelo.
+
+Se propone el segundo método de valorización de opciones, el modelo Binomial, es un modelo menos complejo que el de Black&Scholes, este método se basa en la idea de que el precio de un activo subyacente puede ir variando a medida que pasa el tiempo, es decir, es una variable que se ve modificada a lo largo del tiempo en una serie de pasos discretos *n*, como una secuencia de pasos binarios (estados de la naturaleza *up* y *down)*.
+
+![](FotosH2/Captura%20de%20pantalla%202023-10-19%20180418.png)
+
+Como puede observarse, el árbol binomial genera una distribución de precios a la expiración del contrato. Teniendo en cuenta esta distribución y el strike o precio de ejercicio *K* de la opción podría calcularse el valor de la opción a la expiración del contrato. Debe destacarse que una vez que se calcula el valor de la opción de compra *call* o el valor de la opción de compra *put* con el mismo precio de ejercicio, puede hallarse computando la *"put -- call parity"*. Desde ya, serían opciones europeas.
+
+Para esto, se debe definir primero el entorno, dado un precio de ejercicio *K,* por *max { 0, Sn - K }* que también puede representarse como una función de utilidad *u.* Una primera aproximación al valor hoy está dado por el valor presente descontado. Asumiendo una tasa de descuento constante *R*, lo describimos seguún la siguiente imagen:
+
+![](FotosH2/Captura%20de%20pantalla%202023-10-19%20180427.png)
+
+Sin embargo, una de las falencias que presenta este modelo de valorización es que no toma en cuenta el riesgo.
+
+### Aplicacion modelo adicional
+
+Se aplica el modelo binomial apoyándose de un código replicable que computa el modelo mencionado utilizando los mismos parámetros que en el modelo de Black&Scholes.
+
+```{r}
+binomial_option_pricing <- function(S0, K, r, T, n, option_type = "call") {
+  # S0: Precio actual del activo subyacente
+  # K: Precio de ejercicio de la opción
+  # r: Tasa libre de riesgo
+  # T: Tiempo hasta la expiración de la opción (en años)
+  # n: Número de pasos en el modelo binomial
+  # option_type: Tipo de opción ("call" para una opción de compra, "put" para una opción de venta)
+
+  deltaT <- T / n
+  u <- exp(r * deltaT)
+  d <- 1 / u
+  p <- (exp(r * deltaT) - d) / (u - d)
+
+  # Construir un árbol binomial de precios
+  price_tree <- matrix(0, n + 1, n + 1)
+  for (j in 1:(n + 1)) {
+    price_tree[1, j] <- S0 * u ^ (n - j) * d ^ (j - 1)
+  }
+  
+  for (i in 2:(n + 1)) {
+    for (j in 1:i) {
+      price_tree[i, j] <- S0 * u ^ (n - i + j - 1) * d ^ (i - j)
+    }
+  }
+  
+  # Valorar la opción
+  option_tree <- matrix(0, n + 1, n + 1)
+  if (option_type == "call") {
+    option_tree[n + 1,] <- pmax(0, price_tree[n + 1,] - K)
+  } else if (option_type == "put") {
+    option_tree[n + 1,] <- pmax(0, K - price_tree[n + 1,])
+  }
+
+  for (i in n:1) {
+    for (j in 1:i) {
+      option_tree[i, j] <- exp(-r * deltaT) * (p * option_tree[i + 1, j] + (1 - p) * option_tree[i + 1, j + 1])
+    }
+  }
+
+  return(option_tree[1, 1])
+}
+
+# Ejemplo de uso:
+K <- 1100  # Precio de ejercicio (strike price)
+r <- 0.068    # Tasa de interés libre de riesgo
+T <- 2     # Tiempo hasta la expiración (en años)
+S0 <- 1295       # Tiempo hasta la expiración de la opción (1 año)
+n <- 100    # Número de pasos en el modelo binomial
+option_type <- "call"  # Opción de compra
+
+option_price <- binomial_option_pricing(S0, K, r, T, n, option_type)
+
+cat(paste("Precio de la opción call: ", formatC(option_price, digits = 2), "\n"))
+```
+
+Se puede observar que en este caso, utilizando en su mayoría los mismos parámetros que en el primer modelo a excepción del número de pasos *n* propio del modelo binomial (a mayor cantidad de pásos, más precisión), se observan valores obtenidos muy distintos, lo cual se explicará a continuación.
+
+### Análisis de contraste de ambos modelos.
+
+Primero, hay que mencionar que los resultados no son iguales entre modelos de valoración de acciones, esto se debe principalmente a que existe arbitraje, precisamente por la misma existencia de distintos métodos para valorizar opciones, siendo uno de los principales elementos diferenciadores, factores como los que utilizan modelos más complejos como el sigma en Black&Scholes.
+
+Si bien ambos modelos utilizan en su mayoría casi los mismos parámetros, la gran diferencia se debe al parámetro *n* o número de pasos en el modelo binomial, el cual define con mayor precisión el resultado mientras mayor sea este número de pasos a realizar.
+
+### Reporte Grupal: Caso Administración
+
+El caso replicado a nuestro activo fue el de "Administración de Efectivo de Braam Industries".
+
+El activo utilizado fue el inmobiliario CENCOSHOPP.
+
+Los datos necesarios como las ventas anuales, la tasa de incumplimiento y los costos administrativos se obtuvieron de los estados financieros de la empresa en la CMF. El periodo de cuentas por cobrar se utiliza a 30 días. Los costos variables y la tasa de interes, fueron obtenidos de la memoria de anual de Cencosud.
+
+Como resultado se obtuvo lo siguiente:
+
+![](FotosH2/WhatsApp%20Image%202023-10-26%20at%2021.53.43.jpeg)
