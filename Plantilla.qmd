@@ -1,5 +1,5 @@
 ---
-title: "Hito 2 G15"
+title: "Hito 3 G15"
 author: "Joaquin Sills"
 format: html
 editor: visual
@@ -26,6 +26,10 @@ Los activos inmobiliarios pueden ser propiedades como estructuras y terrenos que
 Las acciones también son un tipo de activo, son un derecho de propiedad y control de un determinado porcentaje del total de la empresa de Cencosud. Corresponde a un instrumento de inversión de capitalización y su renta es variable, es decir, depende de los resultados de Cencosud en sus negocios. Además, los accionistas pueden recibir los dividendos que distribuya el emisor y en ocasiones, acciones liberadas de pago. De acuerdo al derecho que otorgan, las acciones pueden ser ordinarias o preferentes, lo que debe constar en los estatutos sociales y en los títulos respectivos.
 
 La rentabilidad de una acción de Cencosud es lo que más le importa a un accionista, se puede definir como la relación entre el beneficio económico que proporciona la acción (precio y dividendos) y el capital invertido del accionista en un periodo de tiempo; es decir, los flujos obtenidos por tener la acción y el flujo de capital invertido en la adquisición de la acción.
+
+Tras una investigación exhaustiva acerca de documentos de importancia intelectual relacionados con el tema en estudio, se halló un artículo que detalla las variaciones en el valor del suelo en Chile. Este descubrimiento incide directamente en la empresa Cencosud S.A., ya que, desde una perspectiva financiera, la construcción de centros comerciales tiene un efecto positivo en el valor de las propiedades circundantes. Este fenómeno se debe a que la presencia de estos centros crea proximidad a recursos esenciales y elementos de entretenimiento para las personas, generando así un impacto en el consumo y el flujo económico del país.
+
+Link referencia : [https://www.scielo.cl/scielo.php?pid=S0718 34022020000200121&script=sci_arttext&tlng=en](https://www.scielo.cl/scielo.php?pid=S0718%2034022020000200121&script=sci_arttext&tlng=en)
 
 ```{r ETL}
 #| echo: false
@@ -70,6 +74,10 @@ Mi objetivo en estudiar activos inmobiliarios de Cencosud, es porque esta empres
 La empresa Cencosud es conocida por su buen desempeño en innovación y excelencia operativa, lo que me genera un gran interés en aprender más de esta empresa e industria bajo la perspectiva financiera.
 
 Me es sumamente importante profundizar en el análisis y la comprensión de los activos de Cencosud, ya que esto me permitirá adquirir conocimientos y habilidades valiosas en la gestión financiera. Además, considero que estudiar un activo de esta empresa me brindará una visión integral de cómo operan las grandes corporaciones en América Latina en la industria inmobiliaria, lo que será beneficioso para mi desarrollo profesional a largo plazo.
+
+Con respecto a la empresa analizada, resulta crucial enfocarse específicamente en el ámbito vinculado a los centros comerciales que la compañía tiene a su disposición. Esta relevancia surge debido a que en Chile, una considerable parte de la población acude repetidamente a estas grandes estructuras, ya sea para realizar compras o simplemente disfrutar de tiempo de ocio. Este comportamiento se refleja en una noticia publicada por el diario financiero (<https://www.df.cl/empresas/retail/cencosud-shopping-comienza-el-ano-con-entusiasmo-tras-incremento-de-un),> donde se destaca que Cencosud inició el año 2023 registrando un aumento en las visitas e ingresos en su sucursal "Mall Costanera Center", generando así un impacto positivo en la economía nacional gracias al incremento en el flujo monetario.
+
+La decisión de centrar la investigación en el área de los centros comerciales se fundamenta en su notable importancia para el desarrollo del país. Estos centros no solo representan más del 20% del empleo total a nivel nacional, sino que también contribuyen significativamente al Producto Interno Bruto (PIB) del país, según lo señalado en (<https://www.anda.cl/revista/los-chilenos-aman-ir-al-centro-comercial/).>, por lo que parece ser una muy buena decisión invertir en este tipo de activos inmobiliarios especialmente de la empresa Cencosud.
 
 ### Contexto
 
