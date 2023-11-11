@@ -420,3 +420,26 @@ Como resultado se obtuvo lo siguiente:
 Durante el curso, algunos temas relevantes vistos en clases han sido emisiones públicas de valores, arrendamientos, opciones y finanzas corporativas, warrants y bonos convertibles, derivados financieros y cobertura de riesgo, financiamientos, administracion de efectivo entre otros.
 
 Personalmente lo que más me ha interesado es la temática de las opciones, ya que les veo mucha utilidad en términos de futuras inversiones que planeo llevar a cabo, también los diversos métodos de valorización de opciones como por ejemplo el modelo de Black&Scholes y el por qué pueden variar los resultados de un método a otro utilizando una misma opción, haciendo referencia al arbitraje en el mercado, otro concepto sumamente interesante de aprender en profundidad.
+
+Bajo el concepto de valorización de opciones, se ha puesto en práctica anteriormente, el siguiente código hace referencia especialmente al modelo de Black&Scholes:
+
+```{r}
+
+# Datos
+K <- 1100  # Precio de ejercicio (strike price)
+r <- 0.068  # Tasa de interés libre de riesgo
+sigma <- 0.232384   # Volatilidad del activo subyacente
+T <- 2  # Tiempo hasta la expiración (en años)
+S0 <- 1478  # Precio actual del activo subyacente
+
+# Calcula d1 y d2
+d1 <- (log(S0 / K) + (r + (sigma^2) / 2) * T) / (sigma * sqrt(T))
+d2 <- d1 - sigma * sqrt(T)
+
+# Calcula el precio de la opción call
+call_price <- S0 * pnorm(d1) - K * exp(-r * T) * pnorm(d2)
+
+cat("El precio de la opción call es:", round(call_price, 2), "\n")
+```
+
+De este modelo, se ha logrado entender el peso que tienen los factores estudiados como el precio de ejercicio (K), tasas (r), sigma (propio del modelo), tiempo de expiración y el precio inicial.
