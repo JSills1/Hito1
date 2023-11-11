@@ -414,3 +414,9 @@ Los datos necesarios como las ventas anuales, la tasa de incumplimiento y los co
 Como resultado se obtuvo lo siguiente:
 
 ![](FotosH2/WhatsApp%20Image%202023-10-26%20at%2021.53.43.jpeg)
+
+### Aprendizaje del curso:
+
+Durante el curso, algunos temas relevantes vistos en clases han sido emisiones públicas de valores, arrendamientos, opciones y finanzas corporativas, warrants y bonos convertibles, derivados financieros y cobertura de riesgo, financiamientos, administracion de efectivo entre otros.
+
+Personalmente lo que más me ha interesado es la temática de las opciones, ya que les veo mucha utilidad en términos de futuras inversiones que planeo llevar a cabo, también los diversos métodos de valorización de opciones como por ejemplo el modelo de Black&Scholes y el por qué pueden variar los resultados de un método a otro utilizando una misma opción, haciendo referencia al arbitraje en el mercado, otro concepto sumamente interesante de aprender en profundidad.
